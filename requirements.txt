@@ -1,0 +1,5 @@
+pdfplumber
+langdetect
+requests
+beautifulsoup4
+anthropic

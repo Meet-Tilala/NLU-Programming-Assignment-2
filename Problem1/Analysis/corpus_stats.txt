@@ -1,0 +1,33 @@
+==================================================
+  CORPUS STATISTICS
+==================================================
+
+  Total documents  : 316
+  Total tokens     : 193,066
+  Vocabulary size  : 9,454
+
+--------------------------------------------------
+  Top 20 Most Frequent Words (stopwords excluded)
+--------------------------------------------------
+   1. jodhpur                1870
+   2. iit                    1357
+   3. kb                     1147
+   4. institute              1108
+   5. information            1076
+   6. lectures                862
+   7. view                    798
+   8. links                   794
+   9. data                    757
+  10. iitj                    752
+  11. web                     738
+  12. engineering             724
+  13. website                 713
+  14. students                676
+  15. portal                  668
+  16. feedback                610
+  17. course                  600
+  18. india                   571
+  19. learning                543
+  20. science                 537
+
+==================================================

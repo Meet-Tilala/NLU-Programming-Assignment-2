@@ -1,0 +1,26 @@
+# Datasets and models
+dataset/
+data/
+models/
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.env
+.venv/
+.venv*
+.gemini/
+
+# IDEs
+.vscode/
+.idea/
+
+# Problem 1
+Problem1/**/*.pdf
+Problem1/*.pdf

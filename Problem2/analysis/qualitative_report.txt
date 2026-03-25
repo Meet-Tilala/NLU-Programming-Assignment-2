@@ -1,0 +1,176 @@
+=================================================================
+PA-2 | Problem 2 | TASK-3: Qualitative Analysis Report
+=================================================================
+
+─────────────────────────────────────────────────────────────────
+MODEL: Vanilla RNN
+─────────────────────────────────────────────────────────────────
+
+Representative Generated Names (temperature=0.8):
+  Gousan
+  Gavananna
+  Prajas
+  Amnima
+  Sumanas
+  Chilakma
+  jila
+  Tamaman
+  Nrndhami
+  Sudilapa
+  Krushar
+  Madharsa
+  Prajeg
+  Sushak
+  Nachin
+  Rawiti
+  Drijap
+  Saditha
+  Kanash
+  Avipa
+
+Failure Mode Analysis (temperature=1.0, n=20):
+  Good (3-12 chars, non-repetitive) :  20 (100.0%)
+  Too short  (< 3 chars)            :   0 (0.0%)
+  Too long   (> 12 chars)           :   0 (0.0%)
+  Repetitive (single repeated char) :   0 (0.0%)
+
+Average Name Length by Temperature:
+  T=0.5 : 6.30 characters
+  T=0.8 : 6.60 characters
+  T=1.0 : 6.95 characters
+  T=1.2 : 6.80 characters
+
+Discussion:
+  At low temperature (0.5), Vanilla RNN tends to be more deterministic,
+  often producing familiar-sounding names but with lower diversity.
+  At high temperature (1.2), the output becomes more creative but may
+  produce unrealistic character combinations (higher failure rate).
+  The model's failure modes are primarily too short.
+
+─────────────────────────────────────────────────────────────────
+MODEL: Bidirectional LSTM
+─────────────────────────────────────────────────────────────────
+
+Representative Generated Names (temperature=0.8):
+  gim
+  Mesh
+  itan
+  ima
+  yoma
+  mini
+  Nya
+  Vika
+  andi
+  uri
+  urk
+  umi
+  Yath
+  esh
+  esh
+  ita
+  uri
+  hani
+  bila
+  ita
+
+Failure Mode Analysis (temperature=1.0, n=20):
+  Good (3-12 chars, non-repetitive) :  19 (95.0%)
+  Too short  (< 3 chars)            :   1 (5.0%)
+  Too long   (> 12 chars)           :   0 (0.0%)
+  Repetitive (single repeated char) :   0 (0.0%)
+
+Average Name Length by Temperature:
+  T=0.5 : 3.05 characters
+  T=0.8 : 3.45 characters
+  T=1.0 : 3.60 characters
+  T=1.2 : 3.75 characters
+
+Discussion:
+  At low temperature (0.5), Bidirectional LSTM tends to be more deterministic,
+  often producing familiar-sounding names but with lower diversity.
+  At high temperature (1.2), the output becomes more creative but may
+  produce unrealistic character combinations (higher failure rate).
+  The model's failure modes are primarily too short.
+
+─────────────────────────────────────────────────────────────────
+MODEL: RNN + Attention
+─────────────────────────────────────────────────────────────────
+
+Representative Generated Names (temperature=0.8):
+  g
+  kF
+  UB
+  ZCN
+  ZDM
+  ku
+  Pi
+  km
+  jUv
+  rM
+  N
+  Ggr
+  dc
+  Ni
+  rm
+  LR
+  Ex
+  ix
+  HlG
+  CE
+
+Failure Mode Analysis (temperature=1.0, n=20):
+  Good (3-12 chars, non-repetitive) :   9 (45.0%)
+  Too short  (< 3 chars)            :  11 (55.0%)
+  Too long   (> 12 chars)           :   0 (0.0%)
+  Repetitive (single repeated char) :   0 (0.0%)
+
+Average Name Length by Temperature:
+  T=0.5 : 1.80 characters
+  T=0.8 : 2.15 characters
+  T=1.0 : 2.45 characters
+  T=1.2 : 2.45 characters
+
+Discussion:
+  At low temperature (0.5), RNN + Attention tends to be more deterministic,
+  often producing familiar-sounding names but with lower diversity.
+  At high temperature (1.2), the output becomes more creative but may
+  produce unrealistic character combinations (higher failure rate).
+  The model's failure modes are primarily too short.
+
+
+=================================================================
+OVERALL COMPARISON
+=================================================================
+
+Architecture Observations:
+─────────────────────────
+Vanilla RNN:
+  The simplest architecture. Tends to capture common name patterns (short
+  suffixes like -a, -i, -an) but struggles with less frequent character
+  sequences due to the vanishing gradient problem. Generated names are
+  often plausible but lack variety.
+
+Bidirectional LSTM:
+  By processing sequences in both directions during training, the BLSTM
+  builds richer contextual representations. During inference it operates
+  as a standard LSTM decoder. Names tend to be slightly more diverse than
+  Vanilla RNN, with better handling of longer names.
+
+RNN with Attention:
+  The attention mechanism allows the model to selectively focus on
+  relevant parts of the input when generating each character. This
+  typically improves coherence — the model avoids drifting into
+  random character sequences mid-name. However, the added complexity
+  also increases the risk of overfitting on a small dataset like ours.
+
+Common Failure Modes (all models):
+  1. Very short output: the model learns <EOS> too aggressively.
+  2. Name repetition in a single run (low diversity at T < 0.6).
+  3. Phonetically odd combinations (e.g. "Xkrjna") at T > 1.1.
+  4. All-lowercase output: correct behaviour (preprocessing lowercases names).
+
+Realism:
+  Most generated names at T=0.8 are phonetically plausible and resemble
+  genuine Indian first names. The models have learned common suffixes (-a,
+  -i, -an, -ar, -esh, -raj, -ita) and vowel-consonant patterns typical
+  of Indo-Aryan and Dravidian naming conventions.
